@@ -22,8 +22,13 @@ export async function getData(channel, n) {
       .slice(0, n)
       .each(function (index, element) {
         let text = $(element).text();
-        let link =
-          "https://geca.ac.in/" + encodeURIComponent($(element).attr("href"));
+        let link;
+        $(element).attr("href").startsWith("http")
+          ? (link = $(element).attr("href"))
+          : (link =
+              "https://geca.ac.in/" +
+              encodeURIComponent($(element).attr("href")));
+
         result += `${text} - ${link}\n\n`;
       });
     sendMessage(result, channel);
